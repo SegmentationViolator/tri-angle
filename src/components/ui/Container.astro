@@ -1,0 +1,20 @@
+---
+interface Props {
+  as?: 'div' | 'section' | 'article';
+  class?: string;
+}
+
+const { as: Tag = 'div', class: className = '' } = Astro.props;
+---
+
+<Tag class={`container ${className}`}>
+  <slot />
+</Tag>
+
+<style lang="scss">
+  @use '@/styles/abstracts' as *;
+
+  .container {
+    @include container;
+  }
+</style>
