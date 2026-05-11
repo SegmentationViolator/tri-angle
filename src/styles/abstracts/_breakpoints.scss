@@ -1,0 +1,36 @@
+$bp-xs: 360px;
+$bp-sm: 560px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-2xl: 1536px;
+
+@mixin from($size) {
+  @media (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin until($size) {
+  @media (max-width: #{$size - 1px}) {
+    @content;
+  }
+}
+
+@mixin between($min, $max) {
+  @media (min-width: $min) and (max-width: #{$max - 1px}) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin hover-supported {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}

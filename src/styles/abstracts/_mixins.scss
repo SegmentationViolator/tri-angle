@@ -1,0 +1,65 @@
+@use './variables' as *;
+@use './breakpoints' as *;
+
+@mixin container {
+  width: 100%;
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+@mixin section {
+  padding-block: $space-section;
+
+  @include until($bp-md) {
+    padding-block: $space-2xl;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin focus-ring {
+  outline: 2px solid $color-accent;
+  outline-offset: 3px;
+  border-radius: $radius-sm;
+}
+
+@mixin underline-slide {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform $dur-base $ease-out-quart;
+  }
+
+  @include hover-supported {
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
