@@ -1,0 +1,45 @@
+@use '../abstracts' as *;
+
+body {
+  font-family: $font-sans;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: $fw-medium;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: $fs-display;
+}
+
+h2 {
+  font-size: $fs-2xl;
+}
+
+h3 {
+  font-size: $fs-xl;
+}
+
+code,
+kbd,
+pre {
+  font-family: $font-mono;
+  font-size: 0.9em;
+}
+
+.mono {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

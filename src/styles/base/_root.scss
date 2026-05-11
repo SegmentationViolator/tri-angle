@@ -1,0 +1,20 @@
+@use '../abstracts' as *;
+
+:root {
+  --color-bg: #{$color-black};
+  --color-bg-deep: #{$color-black-deep};
+  --color-surface: #{$color-surface};
+  --color-surface-raised: #{$color-surface-raised};
+  --color-fg: #{$color-white};
+  --color-fg-soft: #{$color-white-soft};
+  --color-muted: #{$color-muted};
+  --color-border: #{$color-border};
+  --color-accent: #{$color-accent};
+  --color-accent-deep: #{$color-accent-deep};
+  --color-accent-glow: #{$color-accent-glow};
+
+  --nav-height: 72px;
+  --gutter: #{$gutter};
+
+  color-scheme: dark;
+}
