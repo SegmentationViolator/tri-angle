@@ -17,6 +17,14 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+ 
+  --stage-exit: 0;
+  opacity: calc(1 - var(--stage-exit) * 0.65);
+  transition: opacity 120ms linear;
+
+  @include reduced-motion {
+    opacity: 1;
+  }
 }
 
 // Layer 2 — overlay
@@ -48,6 +56,7 @@
   align-self: center;
   display: grid;
   gap: $space-xl;
+  max-width: 56ch;
 }
 
 .title {
@@ -56,12 +65,29 @@
   letter-spacing: -0.045em;
   line-height: 0.92;
   color: var(--color-fg);
-  max-width: 16ch;
+  max-width: 14ch;
   display: grid;
   margin: 0;
+
+  // Prevent display-scale clamp from blowing out on ultrawide
+  @include from($bp-2xl) {
+    font-size: clamp(5rem, 7vw, 9rem);
+    max-width: 13ch;
+  }
+
+  // Tablet landscape
+  @include between($bp-md, $bp-lg) {
+    max-width: 12ch;
+  }
+
+  // Mobile
+  @include until($bp-md) {
+    font-size: clamp(3rem, 10vw, 4.5rem);
+    letter-spacing: -0.03em;
+    max-width: 11ch;
+  }
 }
 
-// Per-line mask wrapper
 .line {
   display: block;
   overflow: hidden;

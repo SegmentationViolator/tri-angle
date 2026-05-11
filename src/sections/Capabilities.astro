@@ -1,11 +1,136 @@
 ---
+import RevealGroup from '@components/motion/RevealGroup';
+import RevealItem from '@components/motion/RevealItem';
 import styles from './Capabilities.module.scss';
+
+interface Service {
+  readonly num: string;
+  readonly name: string;
+  readonly summary: string;
+}
+
+interface StackGroup {
+  readonly label: string;
+  readonly items: readonly string[];
+}
+
+const SERVICES: readonly Service[] = [
+  {
+    num: '01',
+    name: 'Web Platforms',
+    summary: 'Marketing and product sites engineered for clarity and speed.',
+  },
+  {
+    num: '02',
+    name: 'Motion Interfaces',
+    summary: 'Expressive, performant animation systems — WebGL and DOM.',
+  },
+  {
+    num: '03',
+    name: 'E-Commerce Systems',
+    summary: 'Bespoke storefronts on headless and traditional platforms.',
+  },
+  {
+    num: '04',
+    name: 'Payment Integrations',
+    summary: 'Tightly integrated checkout flows across global providers.',
+  },
+  {
+    num: '05',
+    name: 'Performance Optimization',
+    summary: 'Core Web Vitals, bundle discipline, network choreography.',
+  },
+  {
+    num: '06',
+    name: 'Custom Infrastructure',
+    summary: 'CMS, tooling, and backend systems built to fit.',
+  },
+];
+
+const STACK: readonly StackGroup[] = [
+  {
+    label: 'Frontend',
+    items: ['Next.js', 'React', 'Astro', 'TypeScript', 'SCSS', 'Tailwind', 'Framer Motion'],
+  },
+  {
+    label: 'Commerce',
+    items: ['WooCommerce', 'Shopify', 'WordPress'],
+  },
+  {
+    label: 'Payments',
+    items: ['Razorpay', 'PayU', 'Stripe'],
+  },
+];
 ---
 
 <section id="capabilities" class={styles.capabilities} aria-label="Capabilities">
   <div class={styles.inner}>
-    <p class={styles.index}>01 — Capabilities</p>
-    <h2 class={styles.heading}>What we build.</h2>
-    <p class={styles.placeholder}>Placeholder section.</p>
+    <!-- ── Left column — intro ────────────────── -->
+    <RevealGroup client:visible as="aside" className={styles.lede} stagger={0.1}>
+      <RevealItem as="p" className={styles.index}>
+        <span class={styles.indexMark} aria-hidden="true">△</span>
+        01 — Capabilities
+      </RevealItem>
+
+      <RevealItem as="h2" className={styles.heading}>
+        Built for performance.<br />
+        <span class={styles.headingAccent}>Engineered for scale.</span>
+      </RevealItem>
+
+      <RevealItem as="p" className={styles.supporting}>
+        We build deliberate digital systems — grounded in performance,
+        crafted for longevity, and engineered to the millimetre.
+      </RevealItem>
+    </RevealGroup>
+
+    <!-- ── Right column — modules ─────────────── -->
+    <div class={styles.modules}>
+      <!-- Services -->
+      <section class={styles.module} aria-labelledby="services-label">
+        <RevealGroup client:visible className={styles.servicesWrap} stagger={0.06}>
+          <RevealItem as="p" className={styles.moduleLabel}>
+            <span id="services-label">Services</span>
+          </RevealItem>
+
+          <ol class={styles.services}>
+            {
+              SERVICES.map((service) => (
+                <RevealItem as="li" className={styles.service}>
+                  <span class={styles.serviceNum}>{service.num}</span>
+                  <div class={styles.serviceBody}>
+                    <h3 class={styles.serviceName}>{service.name}</h3>
+                    <p class={styles.serviceSummary}>{service.summary}</p>
+                  </div>
+                </RevealItem>
+              ))
+            }
+          </ol>
+        </RevealGroup>
+      </section>
+
+      <!-- Stack -->
+      <section class={styles.module} aria-labelledby="stack-label">
+        <RevealGroup client:visible className={styles.stackWrap} stagger={0.08}>
+          <RevealItem as="p" className={styles.moduleLabel}>
+            <span id="stack-label">Stack</span>
+          </RevealItem>
+
+          <div class={styles.stack}>
+            {
+              STACK.map((group) => (
+                <RevealItem as="div" className={styles.stackGroup}>
+                  <p class={styles.stackGroupLabel}>{group.label}</p>
+                  <ul class={styles.stackList}>
+                    {group.items.map((item) => (
+                      <li class={styles.stackItem}>{item}</li>
+                    ))}
+                  </ul>
+                </RevealItem>
+              ))
+            }
+          </div>
+        </RevealGroup>
+      </section>
+    </div>
   </div>
 </section>

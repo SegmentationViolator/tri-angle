@@ -1,5 +1,6 @@
 ---
 import Stage from '@components/three/Stage';
+import StageScroll from '@components/three/StageScroll';
 import RevealLines from '@components/motion/RevealLines';
 import RevealFade from '@components/motion/RevealFade';
 import styles from './Hero.module.scss';
@@ -9,9 +10,11 @@ const TITLE_LINES = ['We Engineer,', 'We Build.'] as const;
 
 <section id="hero" class={styles.hero} aria-label="Introduction">
   <!-- Layer 1 — Three.js stage -->
-  <div class={styles.stage} aria-hidden="true">
+  <div class={styles.stage} data-stage aria-hidden="true">
     <Stage client:load />
-  </div>
+</div>
+<StageScroll client:load targetSelector="[data-stage]" />
+
 
   <!-- Layer 2 — cinematic overlay -->
   <div class={styles.overlay} aria-hidden="true"></div>
@@ -19,17 +22,19 @@ const TITLE_LINES = ['We Engineer,', 'We Build.'] as const;
   <!-- Layer 3 — typography -->
   <div class={styles.content}>
     <RevealLines
-      client:load
-      lines={TITLE_LINES}
-      as="h1"
-      className={styles.title}
-      lineClassName={styles.line}
-      innerClassName={styles.lineInner}
-    />
+  client:load
+  lines={TITLE_LINES}
+  as="h1"
+  playKey="hero-title"
+  className={styles.title}
+  lineClassName={styles.line}
+  innerClassName={styles.lineInner}
+/>
 
-    <RevealFade client:load className={styles.tagline}>
-      Digital systems engineered for performance, motion, and precision.
-    </RevealFade>
+<RevealFade client:load className={styles.tagline} playKey="hero-tagline">
+  Digital systems engineered for performance, motion, and precision.
+</RevealFade>
+
   </div>
 
   <!-- Layer 4 — minimal meta rail -->

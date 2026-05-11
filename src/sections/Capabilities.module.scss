@@ -1,30 +1,251 @@
 @use '@/styles/abstracts' as *;
 
+// ── Section shell ─────────────────────────────────────────
 .capabilities {
   @include section;
+  position: relative;
+  background: var(--color-bg);
   border-top: 1px solid var(--color-border);
 }
 
 .inner {
   @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-2xl;
+
+  @include from($bp-lg) {
+    grid-template-columns: minmax(260px, 360px) 1fr;
+    column-gap: $space-3xl;
+    row-gap: $space-2xl;
+  }
+}
+
+// ── Lede (left column) ────────────────────────────────────
+.lede {
+  position: relative;
+
+  @include from($bp-lg) {
+    position: sticky;
+    top: calc(var(--nav-height) + #{$space-xl});
+    align-self: start;
+  }
 }
 
 .index {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2xs;
   font-family: $font-mono;
   font-size: $fs-xs;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: $space-lg;
+}
+
+.indexMark {
   color: var(--color-accent);
-  margin-bottom: $space-md;
+  font-size: 1.05em;
 }
 
 .heading {
-  max-width: 18ch;
+  font-size: clamp(2rem, 1.6rem + 2.4vw, 3.4rem);
+  font-weight: $fw-display;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--color-fg);
+  max-width: 14ch;
+  margin: 0 0 $space-lg;
 }
 
-.placeholder {
-  margin-top: $space-xl;
-  color: var(--color-muted);
+.headingAccent {
+  color: var(--color-fg-soft);
+}
+
+.supporting {
+  max-width: 38ch;
+  color: var(--color-fg-soft);
   font-family: $font-mono;
   font-size: $fs-sm;
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+}
+
+// ── Modules (right column) ────────────────────────────────
+.modules {
+  display: grid;
+  gap: $space-3xl;
+}
+
+.module {
+  display: grid;
+  gap: $space-lg;
+}
+
+.moduleLabel {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding-bottom: $space-xs;
+  border-bottom: 1px solid var(--color-border);
+}
+
+// ── Services list ─────────────────────────────────────────
+.services {
+  display: grid;
+}
+
+.service {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  align-items: baseline;
+  gap: $space-md;
+  padding: $space-lg 0;
+  border-bottom: 1px solid var(--color-border);
+  transition:
+    background-color $dur-base $ease-out-quart,
+    padding $dur-base $ease-out-quart;
+
+  @include hover-supported {
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(200, 16, 46, 0.03) 40%,
+        transparent 100%
+      );
+
+      .serviceName {
+        color: var(--color-fg);
+      }
+
+      .serviceArrow {
+        transform: translateX(6px);
+        color: var(--color-accent);
+        opacity: 1;
+      }
+
+      .serviceNum {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  @include until($bp-md) {
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: $space-sm;
+    padding: $space-md 0;
+  }
+}
+
+.serviceNum {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  transition: color $dur-base $ease-out-quart;
+  padding-top: 0.35em; // baseline-align with title
+}
+
+.serviceBody {
+  display: grid;
+  gap: $space-2xs;
+}
+
+.serviceName {
+  font-size: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
+  font-weight: $fw-semibold;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-fg-soft);
+  margin: 0;
+  transition: color $dur-base $ease-out-quart;
+}
+
+.serviceSummary {
+  font-family: $font-sans;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: var(--color-muted);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.serviceArrow {
+  font-size: 1rem;
+  color: var(--color-muted);
+  opacity: 0.4;
+  transition:
+    transform $dur-base $ease-out-quart,
+    color $dur-base $ease-out-quart,
+    opacity $dur-base $ease-out-quart;
+  padding-top: 0.4em;
+
+  @include until($bp-sm) {
+    display: none;
+  }
+}
+
+// ── Stack grid ────────────────────────────────────────────
+.stack {
+  display: grid;
+  gap: $space-xl;
+
+  @include from($bp-md) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-lg;
+  }
+}
+
+.stackGroup {
+  display: grid;
+  gap: $space-sm;
+  padding-top: $space-sm;
+  border-top: 1px solid var(--color-border);
+}
+
+.stackGroupLabel {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 $space-2xs;
+}
+
+.stackList {
+  display: grid;
+  gap: $space-3xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stackItem {
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  letter-spacing: 0.01em;
+  color: var(--color-fg-soft);
+  padding: $space-3xs 0;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: $radius-full;
+    background: var(--color-accent);
+    margin-right: $space-xs;
+    vertical-align: middle;
+    opacity: 0.6;
+  }
+}
+
+.servicesWrap,
+.stackWrap {
+  display: grid;
+  gap: $space-lg;
 }

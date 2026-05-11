@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
-import { useMemo } from 'react';
-import { easeCinematic, REVEAL_TIMING } from '@lib/motion';
+import { easeCinematic } from '@lib/motion';
 
 interface Props {
   readonly children: ReactNode;
@@ -9,32 +8,18 @@ interface Props {
   readonly delay?: number;
   readonly duration?: number;
   readonly offset?: number;
-  readonly playKey?: string;
 }
 
-const playedKeys = new Set<string>();
-
-export default function RevealFade({
+export default function RevealOnScroll({
   children,
   className,
-  delay = REVEAL_TIMING.tagline.delay,
-  duration = REVEAL_TIMING.tagline.duration,
-  offset = 14,
-  playKey,
+  delay = 0,
+  duration = 0.9,
+  offset = 18,
 }: Props): JSX.Element {
   const reduced = useReducedMotion();
 
-  const skipAnimation = useMemo(() => {
-    if (reduced) return true;
-    if (playKey && playedKeys.has(playKey)) return true;
-    return false;
-  }, [reduced, playKey]);
-
-  if (playKey && !playedKeys.has(playKey)) {
-    playedKeys.add(playKey);
-  }
-
-  if (skipAnimation) {
+  if (reduced) {
     return <div className={className}>{children}</div>;
   }
 
@@ -42,7 +27,8 @@ export default function RevealFade({
     <motion.div
       className={className}
       initial={{ opacity: 0, y: offset }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-10% 0px -15% 0px' }}
       transition={{ duration, ease: easeCinematic, delay }}
     >
       {children}

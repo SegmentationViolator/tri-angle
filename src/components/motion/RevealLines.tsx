@@ -1,4 +1,5 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
+import { useMemo } from 'react';
 import { easeCinematic, REVEAL_TIMING } from '@lib/motion';
 
 type AllowedTag = 'h1' | 'h2' | 'h3' | 'p';
@@ -12,7 +13,12 @@ interface Props {
   readonly delay?: number;
   readonly stagger?: number;
   readonly duration?: number;
+  /** Unique key. When provided, animation plays only once per session. */
+  readonly playKey?: string;
 }
+
+// Module-level registry — survives React remounts within the session.
+const playedKeys = new Set<string>();
 
 const MOTION_TAG = {
   h1: motion.h1,
@@ -30,11 +36,24 @@ export default function RevealLines({
   delay = REVEAL_TIMING.delayBase,
   stagger = REVEAL_TIMING.stagger,
   duration = REVEAL_TIMING.duration,
+  playKey,
 }: Props): JSX.Element {
   const reduced = useReducedMotion();
   const Tag = as;
 
-  if (reduced) {
+  // Determine if animation should skip (already played or reduced motion)
+  const skipAnimation = useMemo(() => {
+    if (reduced) return true;
+    if (playKey && playedKeys.has(playKey)) return true;
+    return false;
+  }, [reduced, playKey]);
+
+  // Mark as played on mount
+  if (playKey && !playedKeys.has(playKey)) {
+    playedKeys.add(playKey);
+  }
+
+  if (skipAnimation) {
     return (
       <Tag className={className}>
         {lines.map((line, i) => (
