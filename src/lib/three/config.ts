@@ -7,8 +7,8 @@ export const GL_CONFIG = {
 } as const;
 
 export const CAMERA_DEFAULTS = {
-  position: [0, 0, 4.2] as [number, number, number],
-  fov: 38,
+  position: [0, 0, 12] as [number, number, number],
+  fov: 28,
   near: 0.1,
   far: 100,
 } as const;

@@ -1,0 +1,1 @@
+class t{listeners=new Set;on(e){return this.listeners.add(e),()=>{this.listeners.delete(e)}}emit(e){this.listeners.forEach(s=>s(e))}clear(){this.listeners.clear()}}const i=new t,l=new t;export{i as s,l as t};

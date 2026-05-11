@@ -1,0 +1,46 @@
+---
+import Stage from '@components/three/Stage';
+import RevealLines from '@components/motion/RevealLines';
+import RevealFade from '@components/motion/RevealFade';
+import styles from './Hero.module.scss';
+
+const TITLE_LINES = ['We Engineer,', 'We Build.'] as const;
+---
+
+<section id="hero" class={styles.hero} aria-label="Introduction">
+  <!-- Layer 1 — Three.js stage -->
+  <div class={styles.stage} aria-hidden="true">
+    <Stage client:load />
+  </div>
+
+  <!-- Layer 2 — cinematic overlay -->
+  <div class={styles.overlay} aria-hidden="true"></div>
+
+  <!-- Layer 3 — typography -->
+  <div class={styles.content}>
+    <RevealLines
+      client:load
+      lines={TITLE_LINES}
+      as="h1"
+      className={styles.title}
+      lineClassName={styles.line}
+      innerClassName={styles.lineInner}
+    />
+
+    <RevealFade client:load className={styles.tagline}>
+      Digital systems engineered for performance, motion, and precision.
+    </RevealFade>
+  </div>
+
+  <!-- Layer 4 — minimal meta rail -->
+  <footer class={styles.meta} aria-hidden="true">
+    <span class={styles.metaItem}>
+      <span class={styles.pulse}></span>
+      <span class={styles.metaValue}>Available · Q3 2026</span>
+    </span>
+    <span class={`${styles.metaItem} ${styles.scrollCue}`}>
+      <span class={styles.metaValue}>Scroll</span>
+      <span class={styles.arrow} aria-hidden="true">↓</span>
+    </span>
+  </footer>
+</section>

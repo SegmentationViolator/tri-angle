@@ -1,0 +1,161 @@
+@use '@/styles/abstracts' as *;
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-top: var(--nav-height);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-bg);
+}
+
+// Layer 1 — Three.js stage
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+// Layer 2 — overlay
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      45% 60% at 75% 50%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 60%,
+      rgba(0, 0, 0, 0.55) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.05) 42%,
+      transparent 58%
+    );
+}
+
+// Layer 3 — content
+.content {
+  @include container;
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  display: grid;
+  gap: $space-xl;
+}
+
+.title {
+  font-size: $fs-display;
+  font-weight: $fw-display;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  color: var(--color-fg);
+  max-width: 16ch;
+  display: grid;
+  margin: 0;
+}
+
+// Per-line mask wrapper
+.line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.04em;
+  line-height: inherit;
+}
+
+.lineInner {
+  display: block;
+  will-change: transform, opacity;
+  transform-origin: 50% 100%;
+}
+
+.tagline {
+  max-width: 38ch;
+  color: var(--color-fg-soft);
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+}
+
+// Layer 4 — meta rail
+.meta {
+  @include container;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-md;
+  padding-block: $space-lg $space-xl;
+  border-top: 1px solid var(--color-border);
+  margin-top: $space-2xl;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2xs;
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fg);
+}
+
+.metaValue {
+  color: var(--color-fg-soft);
+}
+
+.pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 0 var(--color-accent-glow);
+  animation: pulse 2.8s $ease-out-quart infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+.scrollCue { 
+  @include until($bp-sm) {
+    display: none;
+  }
+}
+
+.arrow {
+  display: inline-block;
+  color: var(--color-accent);
+  line-height: 1;
+  animation: drift 3.2s $ease-in-out-quart infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translateY(-1px);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 var(--color-accent-glow); }
+  70%  { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
