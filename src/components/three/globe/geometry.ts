@@ -96,6 +96,8 @@ export async function loadMaskImage(url: string): Promise<ImageData | null> {
     canvas.height = h;
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
+
+
     ctx.drawImage(img, 0, 0, w, h);
     return ctx.getImageData(0, 0, w, h);
   } catch {

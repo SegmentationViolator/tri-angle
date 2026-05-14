@@ -15,7 +15,7 @@ import Atmosphere from './globe/Atmosphere';
 import { buildDottedGlobe, loadMaskImage } from './globe/geometry';
 import { pointsFragment, pointsVertex } from './globe/shaders';
 
-const MASK_URL = '/textures/earth-map.png';
+const MASK_URL = '/textures/earth-map.webp';
 const ROTATION_SPEED = 0.45;
 const PARALLAX_STRENGTH = 0.2;
 const PARALLAX_LERP = 0.4;
