@@ -1,11 +1,97 @@
 ---
+import ProjectPanel from './work/ProjectPanel.astro';
+import type { Project } from './work/ProjectPanel.astro';
 import styles from './SelectedWork.module.scss';
+
+const PROJECTS: readonly Project[] = [
+  {
+    index: '01',
+    slug: 'masked11',
+name: 'Masked11',
+    category: 'E-Commerce',
+    year: '2026',
+    description: 'An E-Commerce site for selling jerseys all over India, made the frontend and the backend, handled everything from cute animations to payment and shipping.',
+stack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Hostinger', 'Razorpay', 'WordPress', 'WooCommerce'],
+    image: '/work/masked11.webp',
+imageAlt: 'Masked11',
+url: 'https://masked11.in'
+  },
+  {
+    index: '02',
+    slug: 'example2',
+    name: 'example2',
+    category: 'Commerce',
+    year: '2025',
+    description:
+      'Modular headless storefront built for rapid iteration. Custom theme engine, programmatic merchandising, and a checkout pipeline integrated with three payment providers.',
+    stack: ['Shopify Hydrogen', 'React', 'Stripe', 'Algolia'],
+    imageAlt: 'Northwind commerce storefront',
+  },
+  {
+    index: '03',
+    slug: 'example3',
+    name: 'eggjample3',
+    category: 'Analytics',
+    year: '2024',
+    description:
+      'Realtime analytics dashboard rendering millions of data points without dropping frames. Custom canvas-based charting layer and a websocket pipeline tuned for sub-second event delivery.',
+    stack: ['React', 'D3', 'WebSocket', 'Postgres'],
+    imageAlt: 'Atlas analytics dashboard',
+  },
+  {
+    index: '04',
+    slug: 'example4',
+    name: 'example4',
+    category: 'Fintech',
+    year: '2024',
+    description:
+      'Multi-provider payment gateway with audit-grade transaction logging. Engineered for compliance, reconciliation, and graceful degradation across regional payment networks.',
+    stack: ['Next.js', 'Razorpay', 'PayU', 'Node.js'],
+    imageAlt: 'Vault payments dashboard',
+  },
+];
 ---
 
 <section id="work" class={styles.work} aria-label="Selected Work">
   <div class={styles.inner}>
-    <p class={styles.index}>02 — Selected Work</p>
-    <h2 class={styles.heading}>Recent projects.</h2>
-    <p class={styles.placeholder}>Placeholder section.</p>
-  </div>
-</section>
+    <!-- ── Intro ──────────────────────────────── -->
+    <header class={styles.intro}>
+      <p class={styles.index} data-reveal>
+        <span class={styles.indexMark} aria-hidden="true">△</span>
+        02 — Selected Work
+      </p>
+
+      <h2
+        class={styles.heading}
+        data-reveal-mask
+        style="--reveal-delay: 80ms"
+      >
+        <span data-reveal-line>Systems we've built.</span>
+      </h2>
+      <h2
+        class={`${styles.heading} ${styles.headingAccent}`}
+        data-reveal-mask
+        style="--reveal-delay: 180ms"
+      >
+        <span data-reveal-line>Experiences engineered.</span>
+      </h2>
+
+      <p
+        class={styles.supporting}
+        data-reveal
+        style="--reveal-delay: 320ms"
+      >
+      </p>
+    </header>
+
+    <!-- ── Projects ───────────────────────────── -->
+    <div class={styles.projects}>
+      {
+        PROJECTS.map((project, i) => (
+          <ProjectPanel
+            project={project}
+            orientation={i % 2 === 0 ? 'left' : 'right'}
+            delay={i * 40}
+          />
+        ))
+      }

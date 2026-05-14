@@ -63,3 +63,43 @@
     }
   }
 }
+
+@mixin section-divider {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(80%, 800px);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-border) 30%,
+      var(--color-border) 70%,
+      transparent 100%
+    );
+  }
+}
+
+@mixin section-atmosphere {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 30vh;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+    z-index: -1;
+  }
+}

@@ -28,3 +28,42 @@
   font-family: $font-mono;
   font-size: $fs-sm;
 }
+
+.projects {
+  display: grid;
+}
+
+.projects > * {
+  position: relative;
+}
+
+.projects > *:not(:first-child) {
+  margin-top: clamp(7rem, 12vw, 12rem);
+  padding-top: clamp(7rem, 12vw, 12rem);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(72%, 720px);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-border) 25%,
+      var(--color-border) 75%,
+      transparent 100%
+    );
+  }
+
+  @include until($bp-md) {
+    margin-top: $space-3xl;
+    padding-top: $space-3xl;
+
+    &::before {
+      width: min(60%, 320px);
+    }
+  }
+}

@@ -31,8 +31,8 @@ export default function RevealItem({
   children,
   className,
   as = 'div',
-  offset = 18,
-  duration = 0.85,
+  offset = 20,
+  duration = 0.95,
 }: Props): JSX.Element {
   const Tag = MOTION_TAG[as];
 

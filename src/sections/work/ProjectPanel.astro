@@ -1,0 +1,122 @@
+---
+import styles from './ProjectPanel.module.scss';
+
+export interface Project {
+  readonly index: string;
+  readonly slug: string;
+  readonly name: string;
+  readonly category: string;
+  readonly description: string;
+  readonly stack: readonly string[];
+  readonly image?: string;
+  readonly imageAlt?: string;
+  readonly year: string;
+  readonly url?: string;
+}
+
+interface Props {
+  readonly project: Project;
+  readonly orientation?: 'left' | 'right';
+}
+
+const { project, orientation = 'left' } = Astro.props;
+const reverseClass = orientation === 'right' ? styles.reverse : '';
+const isExternal = project.url?.startsWith('http');
+---
+
+<article
+  class={`${styles.panel} ${reverseClass}`}
+  aria-labelledby={`work-${project.slug}`}
+>
+  <!-- ── Visual side ────────────────────────── -->
+  <figure class={styles.visual}>
+    {project.url ? (
+      <a
+        href={project.url}
+        class={styles.frameLink}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        aria-label={`View ${project.name} project`}
+      >
+        <div class={styles.frame}>
+          {project.image ? (
+            <img
+              src={project.image}
+              alt={project.imageAlt ?? `${project.name} preview`}
+              class={styles.image}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class={styles.imageFallback} aria-hidden="true">
+              <span class={styles.fallbackIndex}>{project.index}</span>
+            </div>
+          )}
+          <div class={styles.frameOverlay} aria-hidden="true"></div>
+          <div class={styles.frameHover} aria-hidden="true">
+            <span class={styles.frameHoverLabel}>
+              View Project
+              <span class={styles.frameHoverArrow}>→</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    ) : (
+      <div class={styles.frame}>
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.imageAlt ?? `${project.name} preview`}
+            class={styles.image}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class={styles.imageFallback} aria-hidden="true">
+            <span class={styles.fallbackIndex}>{project.index}</span>
+          </div>
+        )}
+        <div class={styles.frameOverlay} aria-hidden="true"></div>
+      </div>
+    )}
+
+    <figcaption class={styles.caption}>
+      <span class={styles.captionItem}>
+        <span class={styles.captionLabel}>Year</span>
+        <span class={styles.captionValue}>{project.year}</span>
+      </span>
+      <span class={styles.captionItem}>
+        <span class={styles.captionLabel}>Type</span>
+        <span class={styles.captionValue}>{project.category}</span>
+      </span>
+    </figcaption>
+  </figure>
+
+  <!-- ── Body side ──────────────────────────── -->
+  <div class={styles.body}>
+    <p class={styles.index}>
+      <span class={styles.indexMark} aria-hidden="true">△</span>
+      Project {project.index}
+    </p>
+
+    <h3 class={styles.name} id={`work-${project.slug}`}>
+      {project.url ? (
+        <a href={project.url} class={styles.nameLink}
+           target={isExternal ? '_blank' : undefined}
+           rel={isExternal ? 'noopener noreferrer' : undefined}>
+          {project.name}
+        </a>
+      ) : (
+        project.name
+      )}
+    </h3>
+
+    <p class={styles.description}>{project.description}</p>
+
+    <ul class={styles.stack}>
+      {project.stack.map((tech) => (
+        <li class={styles.stackItem}>{tech}</li>
+      ))}
+    </ul>
+  </div>
+</article>
